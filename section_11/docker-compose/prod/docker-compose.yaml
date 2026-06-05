@@ -93,19 +93,19 @@ services:
       file: common-config.yaml
       service: network-deploy-service
 
-  tempo:
-    image: grafana/tempo:2.10.5
-    container_name: tempo
-    command:
-      - config.file /etc/tempo-config.yaml
-    ports:
-      - "3110:3100"
-      - "4318:4318"
-    volumes:
-      - ../observability/tempo/tempo.yaml:/etc/tempo-config.yaml
-    extends:
-      file: common-config.yaml
-      service: network-deploy-service
+#  tempo:
+#    image: grafana/tempo:latest
+#    container_name: tempo
+#    command:
+#      - config.file /etc/tempo-config.yaml
+#    ports:
+#      - "3110:3100"
+#      - "4318:4318"
+#    volumes:
+#      - ../observability/tempo/tempo.yaml:/etc/tempo-config.yaml
+#    extends:
+#      file: common-config.yaml
+#      service: network-deploy-service
 
   grafana:
     image: grafana/grafana:latest
