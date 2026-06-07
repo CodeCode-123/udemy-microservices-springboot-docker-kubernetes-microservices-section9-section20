@@ -1,4 +1,17 @@
 services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.6.3
+    container_name: keycloak
+    ports:
+      - "7080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    command: "start-dev"
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
+
   read:
     image: grafana/loki:latest
     command: "-config.file=/etc/loki/config.yaml -target=read -query-scheduler.use-scheduler-ring=false"
@@ -225,7 +238,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "codecode123/configserver:s11"
+    image: "codecode123/configserver:s12"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -241,7 +254,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "codecode123/eurekaserver:s11"
+    image: "codecode123/eurekaserver:s12"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -262,10 +275,11 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "codecode123/accounts:s11"
+    image: "codecode123/accounts:s12"
     container_name: accounts-ms
-    ports:
-      - "8080:8080"
+    # the ports will not be exposed to the outside
+#    ports:
+#      - "8080:8080"
     depends_on:
       configserver:
         condition: service_healthy
@@ -285,10 +299,11 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "codecode123/loans:s11"
+    image: "codecode123/loans:s12"
     container_name: loans-ms
-    ports:
-      - "8090:8090"
+    # not be exposed to the outside
+#    ports:
+#      - "8090:8090"
     depends_on:
       configserver:
         condition: service_healthy
@@ -308,10 +323,11 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "codecode123/cards:s11"
+    image: "codecode123/cards:s12"
     container_name: cards-ms
-    ports:
-      - "9000:9000"
+    # not be exposed to the outside
+#    ports:
+#      - "9000:9000"
     depends_on:
       configserver:
         condition: service_healthy
@@ -331,7 +347,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "codecode123/gatewayserver:s11"
+    image: "codecode123/gatewayserver:s12"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -344,6 +360,8 @@ services:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
+      #direct connect to KeyCloak inside the Docker container but not the outside browser, use port 8080 as it is used in the Docker container
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWT-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
     extends:
       file: common-config.yaml
       service: microservice-eureka-config

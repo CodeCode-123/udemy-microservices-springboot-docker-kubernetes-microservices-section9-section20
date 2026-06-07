@@ -100,7 +100,7 @@
 					</from>
 					<!-- Specify the target image name and registry -->
 					<to>
-						<image>codecode123/${project.artifactId}:s11</image>
+						<image>codecode123/${project.artifactId}:s12</image>
 					</to>
 				</configuration>
 			</plugin>
