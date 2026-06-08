@@ -1,4 +1,20 @@
 services:
+  rabbit:
+    image: rabbitmq:4.0-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.6.3
     container_name: keycloak
@@ -238,7 +254,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "codecode123/configserver:s12"
+    image: "codecode123/configserver:s13"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -254,7 +270,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "codecode123/eurekaserver:s12"
+    image: "codecode123/eurekaserver:s13"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -275,7 +291,7 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "codecode123/accounts:s12"
+    image: "codecode123/accounts:s13"
     container_name: accounts-ms
     # the ports will not be exposed to the outside
 #    ports:
@@ -284,6 +300,8 @@ services:
       configserver:
         condition: service_healthy
       eurekaserver:
+        condition: service_healthy
+      rabbit:
         condition: service_healthy
     healthcheck:
       #test: "curl --fail --silent localhost:8071/actuator/health/readiness || exit 1"
@@ -294,12 +312,13 @@ services:
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "accounts"
+      SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yaml
       service: microservice-eureka-config
 
   loans:
-    image: "codecode123/loans:s12"
+    image: "codecode123/loans:s13"
     container_name: loans-ms
     # not be exposed to the outside
 #    ports:
@@ -323,7 +342,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "codecode123/cards:s12"
+    image: "codecode123/cards:s13"
     container_name: cards-ms
     # not be exposed to the outside
 #    ports:
@@ -346,8 +365,20 @@ services:
       file: common-config.yaml
       service: microservice-eureka-config
 
+  message:
+    image: "codecode123/message:s13"
+    container_name: message-ms
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
+
   gatewayserver:
-    image: "codecode123/gatewayserver:s12"
+    image: "codecode123/gatewayserver:s13"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
