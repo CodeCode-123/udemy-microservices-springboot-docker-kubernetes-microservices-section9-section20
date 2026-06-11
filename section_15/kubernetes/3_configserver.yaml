@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: configserver
-        image: codecode123/configserver:s14
+        image: codecode123/configserver:s12
         ports:
         - containerPort: 8071
 ---
