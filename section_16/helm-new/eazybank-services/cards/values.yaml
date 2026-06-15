@@ -9,7 +9,7 @@ appName: cards
 replicaCount: 1
 
 image:
-  repository: eazybytes/cards
+  repository: codecode123/cards
   tag: s14
 
 containerPort: 9000

@@ -9,7 +9,7 @@ appName: message
 replicaCount: 1
 
 image:
-  repository: eazybytes/message
+  repository: codecode123/message
   tag: s14
 
 containerPort: 9010

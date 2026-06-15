@@ -9,7 +9,7 @@ appName: accounts
 replicaCount: 1
 
 image:
-  repository: eazybytes/accounts
+  repository: codecode123/accounts
   tag: s14
 
 containerPort: 8080

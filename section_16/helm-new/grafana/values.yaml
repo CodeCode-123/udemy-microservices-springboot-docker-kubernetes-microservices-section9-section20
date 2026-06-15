@@ -18,8 +18,8 @@ grafana:
 datasources:
   prometheus:
     url: http://prometheus-kube-prometheus.default.svc.cluster.local:9090
-  tempo:
-    url: http://tempo.default.svc.cluster.local:3100
+#  tempo:
+#    url: http://tempo.default.svc.cluster.local:3100
   loki:
     url: http://loki-gateway.default.svc.cluster.local
 
