@@ -1,6 +1,5 @@
 package com.eazybytes.gatewayserver.filters;
 
-import com.netflix.discovery.converters.Auto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

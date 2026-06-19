@@ -11,7 +11,7 @@ data:
     deleteDatasources:
       - name: Prometheus
       - name: Loki
-      - name: Tempo
+#      - name: Tempo
     
     datasources:
       - name: Prometheus
@@ -47,9 +47,9 @@ data:
         orgId: 1
         editable: true
         url: {{ .Values.datasources.loki.url }}
-        jsonData:
-          derivedFields:
-            - datasourceUid: tempo
-              matcherRegex: "\\[.+,(.+),.+\\]"
-              name: TraceID
-              url: '$${__value.raw}'
+#        jsonData:
+#          derivedFields:
+#            - datasourceUid: tempo
+#              matcherRegex: "\\[.+,(.+),.+\\]"
+#              name: TraceID
+#              url: '$${__value.raw}'
