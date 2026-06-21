@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$/accounts/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cards/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/configserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eazy-bom/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eazy-bom/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eurekaserver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gatewayserver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/loans/src/main/java" charset="UTF-8" />
